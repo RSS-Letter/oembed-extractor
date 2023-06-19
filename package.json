@@ -35,9 +35,6 @@
     "build": "node build src/main.js",
     "reset": "node reset"
   },
-  "dependencies": {
-    "cross-fetch": "^3.1.6"
-  },
   "devDependencies": {
     "esbuild": "^0.18.2",
     "eslint": "^8.42.0",
