@@ -1,37 +1,41 @@
 // utils -> retrieve
 
-// import fetch from 'cross-fetch'
+import fetch from 'cross-fetch'
 
-const profetch = async (url, proxy = {}) => {
-  const { target, headers = {} } = proxy;
+const profetch = async (url, options = {}) => {
+  const { proxy = {}, signal = null } = options
+  const {
+    target,
+    headers = {},
+  } = proxy
   const res = await fetch(target + encodeURIComponent(url), {
     headers,
-  });
-  return res;
-};
+    signal,
+  })
+  return res
+}
 
 export default async (url, options = {}) => {
   const {
     headers = {
-      "user-agent":
-        "Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
+      'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0',
     },
     proxy = null,
-  } = options;
+    agent = null,
+    signal = null,
+  } = options
 
-  const res = proxy
-    ? await profetch(url, proxy)
-    : await fetch(url, { headers });
+  const res = proxy ? await profetch(url, { proxy, signal }) : await fetch(url, { headers, agent, signal })
 
-  const status = res.status;
+  const status = res.status
   if (status >= 400) {
-    throw new Error(`Request failed with error code ${status}`);
+    throw new Error(`Request failed with error code ${status}`)
   }
 
   try {
-    const text = await res.text();
-    return JSON.parse(text.trim());
+    const text = await res.text()
+    return JSON.parse(text.trim())
   } catch (err) {
-    throw new Error("Failed to convert data to JSON object");
+    throw new Error('Failed to convert data to JSON object')
   }
-};
+}
