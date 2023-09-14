@@ -29,9 +29,6 @@
     "sync": "node sync",
     "reset": "node reset"
   },
-  "dependencies": {
-    "cross-fetch": "^4.0.0"
-  },
   "devDependencies": {
     "eslint": "^8.47.0",
     "https-proxy-agent": "^7.0.1",
